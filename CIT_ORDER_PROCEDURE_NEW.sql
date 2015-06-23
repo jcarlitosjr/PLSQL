@@ -75,9 +75,10 @@ BEGIN
               inner join CIT_PRODUCT_REFIL PR on (pr.SKU_ORDER =  it.CATALOG_REF_ID)
               INNER JOIN DCSPP_PAY_GROUP PG ON (PG.ORDER_REF = o.ORDER_ID)
               INNER JOIN temp T ON (T.ORDER_ID = O.ORDER_ID AND T.SKU_ORDER = pr.SKU_ORDER)
+			  --Mudança
               INNER JOIN NT_SKU NTP ON  (NTP.SKU_CODE = T.SKU_REBUY)
 			  INNER JOIN DCS_SKU SKU ON (SKU.SKU_ID = NTP.SKU_ID)
-			 
+			  ---
             where  pr.SKU_REBUY is not null
            AND itOrder.ORDER_ID = ORDER_VO.ORDER_ID
            AND  o.SUBMITTED_DATE is not null
@@ -100,8 +101,10 @@ BEGIN
               inner join DCSPP_ORDER_ITEM itOrder on (o.ORDER_ID = itOrder.ORDER_ID)
               inner join dcspp_item I on (itOrder.COMMERCE_ITEMS = I.COMMERCE_ITEM_ID)
               LEFT JOIN CIT_PRODUCT_REFIL pr on (pr.SKU_ORDER =  I.CATALOG_REF_ID)
-              INNER JOIN NT_PRODUCT NTP ON (NTP.PRODUCT_CODE = I.PRODUCT_ID)
+			  --Mudança
+              INNER JOIN NT_PRODUCT NTP ON (NTP.PRODUCT_ID = I.PRODUCT_ID)
 			  INNER JOIN DCS_PRODUCT DS ON (DS.PRODUCT_ID = NTP.PRODUCT_ID)
+			  ---
                INNER JOIN DCSPP_PAY_GROUP PG ON (PG.ORDER_REF = o.ORDER_ID)
             WHERE PR.SKU_ORDER IS NULL and o.SUBMITTED_DATE + 150 >= sysdate
             AND O.ORDER_ID = ORDER_VO.ORDER_ID and o.SUBMITTED_DATE is not null
